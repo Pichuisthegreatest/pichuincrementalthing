@@ -1,0 +1,288 @@
+
+body {
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	background-color: #333;
+	color: white;
+}
+
+.game-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.tab-navigation {
+    width: 200px;
+    background-color: #222;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 3px solid #000;
+}
+
+.content-area {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+}
+
+.tab-button {
+    background-color: #444;
+    color: white;
+    border: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+    padding: 15px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-button:hover {
+    background-color: #555;
+}
+
+.tab-button.active {
+    background-color: #666;
+    border-left: 3px solid #fff;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Stats and settings styles */
+.stats-container, .settings-container {
+    background-color: #444;
+    border: 3px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 80%;
+}
+
+.stat-item, .setting-item {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #555;
+    border-radius: 5px;
+}
+
+button {
+	margin: 10px 5px;
+	padding: 12px;
+	white-space: normal; /* Allow text to wrap */
+	max-width: 100%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	line-height: 1.5;
+	background-color: #555;
+	color: white;
+	border: 3px solid #000;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+button:hover {
+	background-color: #666;
+}
+
+#rankupbutton {
+	margin-top: 10px;
+	display: inline-block;
+	text-align: center;
+	line-height: 1.5;
+	border-color: #444;
+}
+
+.upgrade-container {
+	margin-bottom: 20px;
+	background-color: #444;
+	padding: 15px;
+	border-radius: 8px;
+	border: 3px solid #000;
+	max-width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ranks {
+	margin-bottom: 25px;
+	border-bottom: 2px solid #555;
+	padding-bottom: 20px;
+	background-color: #444;
+	padding: 15px;
+	border-radius: 8px;
+	max-width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#rankupbutton {
+	margin-top: 10px;
+}
+
+#reset-button {
+	margin-top: 30px;
+}
+
+/* General styling improvements */
+label {
+	display: block;
+	margin: 8px 0;
+}
+
+/* Light mode styles */
+.light-mode {
+	background-color: #f0f0f0;
+	color: #333;
+}
+
+.light-mode .tab-navigation {
+	background-color: #e0e0e0;
+	border-right: 3px solid #ccc;
+}
+
+.light-mode .tab-button {
+	background-color: #d0d0d0;
+	color: #333;
+}
+
+.light-mode .tab-button:hover {
+	background-color: #c0c0c0;
+}
+
+.light-mode .tab-button.active {
+	background-color: #b0b0b0;
+	border-left: 3px solid #333;
+}
+
+.light-mode .upgrade-container,
+.light-mode .stats-container,
+.light-mode .settings-container,
+.light-mode .ranks {
+	background-color: #e0e0e0;
+	border: 3px solid #aaa;
+}
+
+.light-mode button {
+	background-color: #d0d0d0;
+	color: #333;
+	border: 3px solid #aaa;
+}
+
+.light-mode button:hover {
+	background-color: #c0c0c0;
+}
+
+.light-mode .stat-item,
+.light-mode .setting-item {
+	background-color: #d0d0d0;
+}
+
+/* Save and import data container styles */
+.save-data-container,
+.import-data-container {
+	background-color: #444;
+	border-radius: 8px;
+	padding: 15px;
+	margin-top: 20px;
+}
+
+.light-mode .save-data-container,
+.light-mode .import-data-container {
+	background-color: #d0d0d0;
+}
+
+/* Atomize tab styles with RGB gradient */
+#atomize-tab-button {
+	background: linear-gradient(45deg, #ff3333, #33ff33, #3333ff);
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+#atomize-tab-button:hover {
+	background: linear-gradient(45deg, #ff5555, #55ff55, #5555ff);
+}
+
+#atomize-tab-button.active {
+	background: linear-gradient(45deg, #ff7777, #77ff77, #7777ff);
+	border-left: 3px solid white;
+}
+
+.light-mode #atomize-tab-button {
+	background: linear-gradient(45deg, #dd2222, #22dd22, #2222dd);
+	color: white;
+}
+
+.light-mode #atomize-tab-button:hover {
+	background: linear-gradient(45deg, #ee3333, #33ee33, #3333ee);
+}
+
+.light-mode #atomize-tab-button.active {
+	background: linear-gradient(45deg, #ff4444, #44ff44, #4444ff);
+	border-left: 3px solid white;
+}
+
+.atom-upgrade-button {
+	margin: 10px;
+	background: linear-gradient(45deg, #ff3333, #33ff33, #3333ff);
+	color: white;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.atom-upgrade-button:hover {
+	background: linear-gradient(45deg, #ff5555, #55ff55, #5555ff);
+}
+
+.atom-upgrade-button.purchased {
+	background: #555;
+	color: #aaa;
+}
+
+.light-mode .atom-upgrade-button {
+	background: linear-gradient(45deg, #dd2222, #22dd22, #2222dd);
+	color: white;
+}
+
+.light-mode .atom-upgrade-button:hover {
+	background: linear-gradient(45deg, #ee3333, #33ee33, #3333ee);
+}
+
+.light-mode .atom-upgrade-button.purchased {
+	background: #bbb;
+	color: #777;
+}
+
+/* Shell Power styles */
+#shell-power-section {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 2px solid #555;
+}
+
+#shell-button {
+	background-color: #335566;
+	margin-top: 10px;
+}
+
+#shell-button:hover {
+	background-color: #446677;
+}
+
+.light-mode #shell-button {
+	background-color: #d0e0e0;
+	color: #335566;
+}
+
+.light-mode #shell-button:hover {
+	background-color: #c0d0d0;
+}
