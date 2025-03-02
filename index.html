@@ -1,17 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pichu incremental</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Pichu Incremental</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Incremental thigns</h1>
-    <p>Quarks: <span id="currency">0</span></p>
-    <button id="click-button">Click for +1</button>
-    <button id="upgrade-button">Upgrade (Cost: <span id="upgrade-cost">10</span>)</button>
+    <!-- Load break_eternity.js first -->
+    <script src="https://cdn.jsdelivr.net/npm/break_eternity.js/break_eternity.min.js"></script>
+    <!-- Then load your game code -->
 
-    <script src="game.js"></script>
+    <div class="game-container">
+        <!-- Tab navigation -->
+        <div class="tab-navigation">
+            <button class="tab-button active" data-tab="main">Main</button>
+            <!-- Removed Atomize tab button from navigation -->
+            <button class="tab-button" data-tab="statistics">Statistics</button>
+            <button class="tab-button" data-tab="settings">Settings</button>
+        </div>
+
+        <!-- Main content area -->
+        <div class="content-area">
+            <!-- Main tab - default visible -->
+            <div class="tab-content active" id="main-tab">
+                <h1>Incremental game</h1>
+                <div class="ranks">
+                    <label id="rank-label">Energy level <span id="rank">0</span></label>
+                    <button id="rankupbutton">
+                        Empowers quarks to increase the energy level of the quarks.<br>
+                        <span id="rank-benefits">(Next: 1) Unlocks upgrade 4</span><br>
+                        Requires <span id="rankcost">1.00M</span> quarks.
+                    </button>
+
+                    <!-- Shell Power section (hidden until first atomize) -->
+                    <div id="shell-power-section" style="display: none; margin-top: 20px; border-top: 1px solid #555; padding-top: 15px;">
+                        <label>Shell Power: <span id="shell-power">0</span></label>
+                        <button id="shell-button">
+                            Gain Shell Power to multiply production by <span id="shell-multiplier">1.00</span>x<br>
+                            Requires <span id="shell-cost">10</span> Energy levels
+                        </button>
+                    </div>
+
+                    <!-- Hidden list of rank benefits -->
+                    <div id="rank-benefits-list" style="display: none;">
+                        <div data-rank="1">Create an electron, quintupling all quark gain</div>
+                        <div data-rank="2">Quarks boost quarks logarithmically</div>
+                        <div data-rank="3">Reduces time between quarks gathering to 2s</div>
+                        <div data-rank="4">Unlock upgrade 4</div>
+                        <div data-rank="5">Increase the cap of upgrade 3 to 15</div>
+                        <div data-rank="6">Make upgrade 1 increase its multiplier by purchases</div>
+                        <div data-rank="7">For every upgrade 2, you gain one free upgrade 1</div>
+                        <div data-rank="8">For every upgrade 3, you gain one free upgrade 2</div>
+                        <div data-rank="10">Unlock Atomize</div>
+                    </div>
+                </div>
+                <label id="quark-label">Quarks: <span id="currency">0</span> (+ <span id="multiplier">1</span> / <span id="time">2500</span>ms)</label>
+
+                <div class="upgrade-container">
+                    <button id="upgrade-button">Cost: <span id="upgrade-cost">10</span>(<span id="upgrade-amount">0</span>)</button>
+                    <label id="upgrade-label">Increases quark gain by 1x</label>
+                </div>
+
+                <div class="upgrade-container">
+                    <button id="upgrade-button2">Cost: <span id="upgrade-cost2">50</span>(<span id="upgrade-amount2">0</span>)</button>
+                    <label id="upgrade-label2">Create a proton that doubles all quark gain. After 20 protons, cost scaling increases to 5x.</label>
+                </div>
+
+                <div class="upgrade-container">
+                    <button id="upgrade-button3">Cost: <span id="upgrade-cost3">10000</span>(<span id="upgrade-amount3">0</span>)</button>
+                    <label id="upgrade-label3">Create a neutron which increases upgrade 2 power by ^0.1,<br>at a base of 1. Max <span id="neutron-cap">10</span>.</label>
+                </div>
+
+                <div class="upgrade-container" id="upgrade4-container" style="display: none;">
+                    <button id="upgrade-button4">Cost: <span id="upgrade-cost4">5000000</span>(<span id="upgrade-amount4">0</span>)</button>
+                    <label id="upgrade-label4">Research quarks to quintuples all quark gain.</label>
+                </div>
+
+                <button id="reset-button">Reset Save</button>
+            </div>
+
+            <div class="tab-content" id="statistics-tab">
+                <h1>Game Statistics</h1>
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <h3>Current Energy Level: <span id="stat-rank">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Total Quarks Produced: <span id="stat-total-quarks">0.00</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Current Production: <span id="stat-production">0.00</span> / sec</h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Protons Created: <span id="stat-protons">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Neutrons Created: <span id="stat-neutrons">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Electrons Created: <span id="stat-electrons">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Atoms: <span id="stat-atoms">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Shell Power: <span id="stat-shell-power">0</span></h3>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Rank Benefits:</h3>
+                        <p>Rank Increment (Rank 1): <span id="stat-rank-increment">1.00</span>x</p>
+                        <p>Quark Log Boost (Rank 2): <span id="stat-rank-increment2">1.00</span>x</p>
+                        <p>Free Upgrade 1s (Rank 7): <span id="stat-free-upgrade1">0</span></p>
+                        <p>Free Upgrade 2s (Rank 8): <span id="stat-free-upgrade2">0</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="settings-tab">
+                <h1>Game Settings</h1>
+                <div class="settings-container">
+                    <div class="setting-item">
+                        <h3>Visual Settings</h3>
+                        <button id="toggle-dark-mode">Toggle Dark/Light Mode</button>
+                    </div>
+                    <div class="setting-item">
+                        <h3>Game Data</h3>
+                        <button id="export-save">Export Save</button>
+                        <button id="import-save">Import Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="atom.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
