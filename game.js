@@ -516,7 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 								// Save to localStorage
 								localStorage.setItem("gameData", base64Save);
-				}, 5000);
+				} 5000);
 
 				// Function to update rank benefits text based on current rank
 				function updateRankBenefits(currentRank) {
