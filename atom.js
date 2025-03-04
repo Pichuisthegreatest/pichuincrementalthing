@@ -38,8 +38,6 @@ function handleAtomUI() {
         // Show atomize tab if rank >= 10 OR if player has already atomized previously
         const shouldShowAtomizeTab = rank >= 10 || hasAtomized;
         atomizeTab.style.display = shouldShowAtomizeTab ? "block" : "none";
-        // Moved atomize tab to atom area.  Original location in settings was not specified.
-        atomizeTab.style.backgroundColor = "linear-gradient(to right, red, green, blue)"; // Gradient color
         
         if (atomizeTabButton) {
             atomizeTabButton.style.display = shouldShowAtomizeTab ? "block" : "none";
@@ -91,12 +89,22 @@ function setupAtomizeButton() {
 }
 
 function calculateAtomsToGain() {
-    // Modified formula to gain atoms based on quarks (assuming 'quarks' variable exists)
+    // Modified formula to gain atoms based on quarks
     let atomGain = new Decimal(currency).div(new Decimal(1000000000000)); // 1 trillion quarks = 1 atom
 
     // Apply atom multipliers if any
     if (hasAtomUpgrade("atom-upgrade3")) {
         atomGain = atomGain.times(2); // Double atom gain
+    }
+
+    // Implement softcap at 1e30 atoms
+    const softcapThreshold = new Decimal(1e30);
+    if (atomGain.gt(softcapThreshold)) {
+        // Square root atoms past the softcap
+        const softcappedGain = softcapThreshold.plus(
+            atomGain.minus(softcapThreshold).sqrt()
+        );
+        atomGain = softcappedGain;
     }
 
     return atomGain.floor(); // Round down to nearest whole atom
