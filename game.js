@@ -503,6 +503,13 @@ document.addEventListener("DOMContentLoaded", () => {
 												shellMultiplier: shellMultiplier.toString()
 								};
 
+								const atomizeContainer = document.getElementById("atomize-tab");
+    								const atomizeTabButton = document.getElementById("atomize-tab-button");
+    								if (atomizeContainer && atomizeTabButton) {
+       								 const shouldShowAtomizeTab = rank >= 10 || hasAtomized;
+        							 atomizeContainer.style.display = shouldShowAtomizeTab ? "block" : "none";
+        							 atomizeTabButton.style.display = shouldShowAtomizeTab ? "block" : "none";
+									
 								// Convert to JSON and encode as Base64
 								const jsonString = JSON.stringify(saveData);
 								const base64Save = btoa(jsonString);
